@@ -13,3 +13,5 @@ https://colab.research.google.com/github/giswqs/qgis-earthengine-examples/blob/m
 https://colab.research.google.com/github/google/earthengine-community/blob/master/guides/linked/ee-api-colab-setup.ipynb?hl=es-419&authuser=2#scrollTo=VIiyf6azf4mU
 
 https://mapshaper.org/
+
+https://colab.research.google.com/github/csaybar/EEwPython/blob/master/4_features.ipynb
