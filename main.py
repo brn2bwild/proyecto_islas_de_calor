@@ -13,6 +13,7 @@ from folium import plugins
 from streamlit_folium import st_folium
 from pathlib import Path
 from dotenv import load_dotenv
+import json
 
 # Cargamos el archivo de variables de entorno
 load_dotenv()
@@ -86,6 +87,8 @@ BASEMAPS = {
     ),
 }
 
+# st.write(json.dumps(dict(st.secrets["google"]["gee_api_key"])))
+
 
 def connect_with_gee():
     # Importar módulos utilitarios
@@ -94,11 +97,21 @@ def connect_with_gee():
         or st.session_state.gee_available == False
     ):
         try:
+
             ee.Authenticate()
-            ee.Initialize(project=os.getenv("GEE_PROJECT"))
+
+            credentials = ee.ServiceAccountCredentials(
+                st.secrets["google"]["google-service-account"],
+                key_data=json.dumps(dict(st.secrets["google"]["gee_api_key"])),
+            )
+
+            # ee.Initialize(project=os.getenv("GEE_PROJECT"))
+
+            ee.Initialize(credentials)
             st.toast("Google Earth Engine inicializado")
             st.session_state.gee_available = True
         except Exception as e:
+            # st.toast(e)
             st.toast("No se pudo inicializar Google Earth Engine")
             st.session_state.gee_available = False
             return False
@@ -200,6 +213,7 @@ def set_coordinates():
             roi.centroid().coordinates().getInfo()[-1],
             roi.centroid().coordinates().getInfo()[0],
         )
+
 
 # Método para mostrar el panel del mapa
 def show_map_panel():
