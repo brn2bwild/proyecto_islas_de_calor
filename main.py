@@ -111,7 +111,7 @@ def connect_with_gee():
             st.toast("Google Earth Engine inicializado")
             st.session_state.gee_available = True
         except Exception as e:
-            # st.toast(e)
+            st.toast(e)
             st.toast("No se pudo inicializar Google Earth Engine")
             st.session_state.gee_available = False
             return False
