@@ -101,12 +101,14 @@ def connect_with_gee():
 
             ee.Authenticate()
 
+            google_service_account = st.secrets["GOOGLE_SERVICE_ACCOUNT"]
+
             raw_key = st.secrets["GEE_PRIVATE_KEY"]
 
-            # st.write(raw_key.strip().replace("\\n", "\n"))
+            # print(raw_key.strip().replace("\\n", "\n"))
 
             credentials = ee.ServiceAccountCredentials(
-                st.secrets["GOOGLE_SERVICE_ACCOUNT"],
+                google_service_account,
                 key_data=json.dumps(dict(raw_key)),
             )
 
