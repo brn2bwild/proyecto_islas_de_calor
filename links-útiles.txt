@@ -15,3 +15,7 @@ https://colab.research.google.com/github/google/earthengine-community/blob/maste
 https://mapshaper.org/
 
 https://colab.research.google.com/github/csaybar/EEwPython/blob/master/4_features.ipynb
+
+https://www.youtube.com/watch?v=wHBUNDTvgtk
+
+https://discuss.streamlit.io/t/how-to-use-an-entire-json-file-in-the-secrets-app-settings-when-deploying-on-the-community-cloud/49375/2

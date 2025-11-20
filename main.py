@@ -12,11 +12,12 @@ import folium
 from folium import plugins
 from streamlit_folium import st_folium
 from pathlib import Path
-from dotenv import load_dotenv
+
+# from dotenv import load_dotenv
 import json
 
 # Cargamos el archivo de variables de entorno
-load_dotenv()
+# load_dotenv()
 
 # Carpetas de trabajo
 BASE_DIR = Path(__file__).parent
@@ -100,12 +101,14 @@ def connect_with_gee():
 
             ee.Authenticate()
 
-            credentials = ee.ServiceAccountCredentials(
-                st.secrets["google"]["google-service-account"],
-                key_data=json.dumps(dict(st.secrets["google"]["gee_api_key"])),
-            )
+            raw_key = st.secrets["GEE_PRIVATE_KEY"]
 
-            # ee.Initialize(project=os.getenv("GEE_PROJECT"))
+            # st.write(raw_key.strip().replace("\\n", "\n"))
+
+            credentials = ee.ServiceAccountCredentials(
+                st.secrets["GOOGLE_SERVICE_ACCOUNT"],
+                key_data=json.dumps(dict(raw_key)),
+            )
 
             ee.Initialize(credentials)
             st.toast("Google Earth Engine inicializado")
@@ -203,8 +206,11 @@ def create_map(center=st.session_state.coordinates, zoom_start=13):
 
 def set_coordinates():
     if st.session_state.gee_available == True:
+
+        localities_asset = st.secrets["GEE_LOCALITIES_ASSET"]
+
         roi = (
-            ee.FeatureCollection(os.getenv("GEE_LOCALITIES_ASSET"))
+            ee.FeatureCollection(localities_asset)
             .filter(ee.Filter.eq("NOMGEO", st.session_state.locality))
             .geometry()
         )
